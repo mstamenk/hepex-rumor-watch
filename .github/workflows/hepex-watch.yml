@@ -34,9 +34,14 @@ jobs:
 
       - name: Commit and push if changed
         run: |
-          # Check if hepexrumor.html changed
-          if [[ -n "$(git status --porcelain hepexrumor.html)" ]]; then
+          if git diff --quiet -- hepexrumor.html; then
+            echo "No changes to commit."
+          else
             echo "Changes detected, committing..."
             git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@us
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add hepexrumor.html
+            git commit -m "Update hepex rumor mill snapshot"
+            git push
+          fi
 
